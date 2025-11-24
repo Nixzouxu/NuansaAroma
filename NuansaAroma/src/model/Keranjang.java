@@ -44,5 +44,39 @@ public class Keranjang {
         }
     }
 
+    // [FIX 1] Dibutuhkan saat checkout berhasil
+    /**
+     * Mengosongkan seluruh isi keranjang serta mengatur total harga menjadi 0.
+     */
+    public void kosongkan() {
+        barangList.clear();
+        totalHarga = 0;
+    }
+
+    // [FIX 2] Dibutuhkan untuk menampilkan total harga
+    /**
+     * Menghitung ulang total harga dari seluruh barang dalam keranjang.
+     *
+     * @return total harga seluruh barang dalam keranjang
+     */
+    public double hitungTotal() {
+        totalHarga = 0;
+        for (Barang b : barangList) {
+            totalHarga += b.getHarga();
+        }
+        return totalHarga;
+    }
+
+    // [FIX 3] Dibutuhkan CustomerDriver untuk mengambil isi keranjang
+    /**
+     * Mengambil seluruh barang yang ada dalam keranjang.
+     *
+     * @return list barang dalam keranjang
+     */
+    public ArrayList<Barang> getItems() {
+        return barangList;
+    }
+}
+
 
     

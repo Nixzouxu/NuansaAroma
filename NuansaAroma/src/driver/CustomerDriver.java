@@ -44,3 +44,57 @@ public class CustomerDriver extends Driver {
                 System.out.println("Error: Masukkan angka valid!");
                 continue;
             }
+
+             switch (pilihan) {
+                case 1:
+                    akun.lihatBarang(listBarang);
+                    break;
+                case 2:
+                    prosesTambahKeranjang();
+                    break;
+                case 3:
+                    lihatKeranjang();
+                    break;
+                case 4:
+                    buatTransaksi();
+                    break;
+                case 5:
+                    akun.lihatRiwayatInvoice();
+                    break;
+                case 6:
+                    System.out.println("Terima kasih sudah berbelanja!");
+                    break;
+                default:
+                    System.out.println("Pilihan tidak ada.");
+            }
+        } while (pilihan != 6);
+    }
+
+    private void prosesTambahKeranjang() {
+        akun.lihatBarang(listBarang);
+        System.out.print("\nMasukkan ID Parfum yang ingin dibeli: ");
+        String id = scanner.nextLine();
+        
+        Barang b = listBarang.cariBarang(id);
+        if (b != null) {
+            akun.tambahKeKeranjang(b);
+        } else {
+            System.out.println("Barang dengan ID tersebut tidak ditemukan.");
+        }
+    }
+
+    private void lihatKeranjang() {
+        Keranjang k = akun.getKeranjang();
+        ArrayList<Barang> items = k.getItems();
+        
+        System.out.println("\n--- ISI KERANJANG SAYA ---");
+        if (items.isEmpty()) {
+            System.out.println("(Keranjang Kosong)");
+        } else {
+            for (Barang b : items) {
+                System.out.println("- " + b.getNama() + " (Rp" + b.getHarga() + ")");
+            }
+            System.out.println("TOTAL HARGA: Rp" + k.hitungTotal());
+        }
+    }
+

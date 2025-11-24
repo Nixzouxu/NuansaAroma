@@ -178,6 +178,11 @@ public class AdminDriver extends Driver {
         }
     }
 
+   /**
+     * Menampilkan daftar transaksi (memanggil {@code lihatTransaksi()}), 
+     * kemudian meminta ID Transaksi untuk dikonfirmasi.
+     * Memanggil method {@code konfirmasiTransaksi} dari objek {@code Admin}.
+     */
     private void konfirmasiTransaksi() {
         lihatTransaksi();
         if (listTransaksi == null || listTransaksi.isEmpty()) return;

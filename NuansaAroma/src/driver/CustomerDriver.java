@@ -4,7 +4,7 @@ import nuansaaroma.model.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// [FIX 1] Nama Class harus Huruf Besar (CustomerDriver)
+
 public class CustomerDriver extends Driver {
     private Customer akun;
     private ListBarang listBarang; 
@@ -140,7 +140,7 @@ public void buatTransaksi() {
         }
     }
 
-    // [FIX 2] Ubah 'pembayaran' (kecil) jadi 'Pembayaran' (Besar/Class)
+    
     private Pembayaran pilihMetodePembayaran(double total) {
         System.out.println("\nPilih Metode Pembayaran:");
         System.out.println("1. QRIS");

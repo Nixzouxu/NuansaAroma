@@ -32,3 +32,34 @@ public class ListBarang {
             System.out.println("Gudang Penuh!");
         }
     }
+
+    /**
+     * Menghapus barang berdasarkan ID. Menggunakan pencarian dengan metode
+     * lambda dan {@code removeIf}.
+     *
+     * @param id ID barang yang ingin dihapus
+     */
+    public void hapusBarang(String id) {
+        boolean removed = barangList.removeIf(b -> b.getIdBarang().equalsIgnoreCase(id));
+        if (removed) {
+            System.out.println("Barang dengan ID " + id + " berhasil dihapus.");
+        } else {
+            System.out.println("Barang tidak ditemukan.");
+        }
+    }
+
+    /**
+     * Mengubah data barang dengan mencocokkan ID barang lama dengan barang baru.
+     *
+     * @param bBaru objek barang baru yang berisi data pembaruan
+     */
+    public void editBarang(Barang bBaru) {
+        for (int i = 0; i < barangList.size(); i++) {
+            if (barangList.get(i).getIdBarang().equalsIgnoreCase(bBaru.getIdBarang())) {
+                barangList.set(i, bBaru);
+                System.out.println("Data barang berhasil diperbarui.");
+                return;
+            }
+        }
+        System.out.println("Barang yang akan diedit tidak ditemukan.");
+    }

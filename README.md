@@ -23,7 +23,7 @@
 
 ## 💭 The Story Behind
 
-> *"Aroma bukan sekadar wangi—ia adalah identitas, kenangan, dan kehadiran yang tertinggal."*
+> *"Aroma bukan sekadar wangi ia adalah identitas, kenangan, dan kehadiran yang tertinggal."*
 
 NuansaAroma lahir dari sebuah pertanyaan sederhana: **Bagaimana jika pengalaman berbelanja parfum bisa semudah dan seindah wanginya?**
 

@@ -5,7 +5,7 @@ package nuansaaroma.model;
  * yang digunakan dalam sistem. Setiap jenis pembayaran harus menurunkan kelas ini
  * dan mengimplementasikan proses pembayarannya masing-masing.
  *
- * <p>Kelas ini menyimpan informasi umum seperti ID pembayaran dan jumlah yang harus dibayar.</p>
+ * Kelas ini menyimpan informasi umum seperti ID pembayaran dan jumlah yang harus dibayar.
  */
 public abstract class Pembayaran {
     protected String id;
@@ -21,3 +21,34 @@ public abstract class Pembayaran {
         this.id = id;
         this.jumlah = jumlah;
     }
+
+    // Abstract method: Wajib diisi oleh subclass (QRIS, Bank, COD)
+    /**
+     * Method abstrak yang wajib diimplementasikan oleh setiap subclass,
+     * seperti {@code QRIS}, {@code Bank}, atau {@code COD}.  
+     * Method ini berisi proses pembayaran sesuai metode masing-masing.
+     *
+     * @return true jika pembayaran berhasil diproses
+     */
+    public abstract boolean prosesPembayaran();
+
+    /**
+     * Mengambil nama metode pembayaran berdasarkan nama class konkret.
+     * Contoh: kelas {@code QRIS} akan menghasilkan string "QRIS".
+     *
+     * @return nama metode pembayaran
+     */
+    public String getMetode() {
+        return this.getClass().getSimpleName(); // Mengambil nama class (misal: "QRIS")
+    }
+    
+    /**
+     * Mengambil jumlah uang yang harus dibayarkan.
+     *
+     * @return total jumlah pembayaran
+     */
+    public double getJumlah() { return jumlah; }
+}
+
+
+    

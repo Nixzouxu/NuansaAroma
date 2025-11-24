@@ -130,3 +130,37 @@ public void buatTransaksi() {
                 b.setStok(sisaStok); // Pastikan class Barang punya method setStok
             }
             
+    // Cetak Invoice
+            Invoice inv = new Invoice(t, pay);
+            inv.cetak();
+            akun.addInvoice(inv);
+            
+            k.kosongkan();
+            System.out.println("\nTransaksi Berhasil! Menunggu Konfirmasi Admin.");
+        }
+    }
+
+    // [FIX 2] Ubah 'pembayaran' (kecil) jadi 'Pembayaran' (Besar/Class)
+    private Pembayaran pilihMetodePembayaran(double total) {
+        System.out.println("\nPilih Metode Pembayaran:");
+        System.out.println("1. QRIS");
+        System.out.println("2. Transfer Bank");
+        System.out.println("3. COD (Cash On Delivery)");
+        System.out.print("Pilih (1-3): ");
+        
+        try {
+            int pil = Integer.parseInt(scanner.nextLine());
+            String idPay = "PAY-" + System.currentTimeMillis();
+
+            if (pil == 1) return new QRIS(idPay, total, "NUANSA_AROMA_QR");
+            if (pil == 2) return new Bank(idPay, total, "123-456-7890", "Bank BSI");
+            if (pil == 3) return new COD(idPay, total, akun.getAlamat());
+            
+            System.out.println("Pilihan salah.");
+            return null;
+        } catch (NumberFormatException e) {
+            System.out.println("Input salah.");
+            return null;
+        }
+    }
+}

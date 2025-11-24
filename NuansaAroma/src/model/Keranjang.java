@@ -21,3 +21,28 @@ public class Keranjang {
         this.barangList = new ArrayList<>();
         this.totalHarga = 0;
     }
+
+    /**
+     * Menambahkan sebuah barang ke dalam keranjang dan memperbarui total harga.
+     *
+     * @param b barang yang akan ditambahkan
+     */
+    public void tambahBarang(Barang b){
+        barangList.add(b);
+        hitungTotal();
+    }
+
+    /**
+     * Menghapus sebuah barang dari keranjang jika barang tersebut ada,
+     * kemudian memperbarui total harga.
+     *
+     * @param b barang yang ingin dihapus
+     */
+    public void hapusBarang(Barang b) {
+        if (barangList.remove(b)) {
+            hitungTotal();
+        }
+    }
+
+
+    

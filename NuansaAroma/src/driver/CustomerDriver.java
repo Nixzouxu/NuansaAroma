@@ -98,3 +98,35 @@ public class CustomerDriver extends Driver {
         }
     }
 
+public void buatTransaksi() {
+        Keranjang k = akun.getKeranjang();
+        if (k.getItems().isEmpty()) {
+            System.out.println("Keranjang kosong, tidak bisa checkout.");
+            return;
+        }
+
+        double total = k.hitungTotal();
+        System.out.println("\n--- PROSES CHECKOUT ---");
+        System.out.println("Total Tagihan: Rp" + total);
+        
+        // Pilih Pembayaran
+        Pembayaran pay = pilihMetodePembayaran(total);
+        if (pay == null) return; 
+
+        // Proses Pembayaran
+        if (pay.prosesPembayaran()) {
+            String idTrx = "TRX-" + System.currentTimeMillis();
+            
+            // Clone list barang
+            ArrayList<Barang> belanjaan = new ArrayList<>(k.getItems());
+            
+            Transaksi t = new Transaksi(akun, belanjaan, idTrx, total);
+            
+            globalTransaksi.add(t); 
+            
+            // Kurangi Stok
+            for(Barang b : belanjaan) {
+                int sisaStok = b.getStok() - 1; 
+                b.setStok(sisaStok); // Pastikan class Barang punya method setStok
+            }
+            

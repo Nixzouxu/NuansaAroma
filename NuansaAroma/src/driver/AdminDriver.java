@@ -4,6 +4,11 @@ import nuansaaroma.model.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * {@code AdminDriver} adalah kelas driver yang menangani interaksi pengguna untuk
+ * akun dengan peran Admin.
+ * Kelas ini menyediakan menu untuk mengelola barang (parfum) dan transaksi.
+
 public class AdminDriver extends Driver {
     private Admin akun;
     private ListBarang listBarang;

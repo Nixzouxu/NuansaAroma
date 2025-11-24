@@ -84,6 +84,7 @@ public class CustomerDriver extends Driver {
                     buatTransaksi();
                     break;
                 case 5:
+                   // Asumsi akun.lihatRiwayatInvoice() menampilkan daftar Invoice yang dimiliki Customer
                     akun.lihatRiwayatInvoice();
                     break;
                 case 6:

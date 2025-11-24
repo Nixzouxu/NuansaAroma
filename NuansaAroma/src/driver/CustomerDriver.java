@@ -4,7 +4,12 @@ import nuansaaroma.model.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+/**
+ * {@code CustomerDriver} adalah kelas driver yang menangani interaksi pengguna
+ * untuk akun dengan peran Pelanggan (Customer).
+ * Kelas ini menyediakan menu untuk melihat katalog, mengelola keranjang,
+ * melakukan checkout, dan melihat riwayat belanja.
+    */
 public class CustomerDriver extends Driver {
     private Customer akun;
     private ListBarang listBarang; 

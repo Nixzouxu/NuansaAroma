@@ -52,4 +52,40 @@ public class Akun {
         return id;
     }
 
-   
+    /**
+     * Mengambil password akun.
+     *
+     * @return password akun
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * Mengambil nama akun.
+     *
+     * @return nama akun
+     */
+    public String getNama() { 
+        return nama; 
+    }
+
+    /**
+     * Mengambil role akun.
+     *
+     * @return role akun
+     */
+    public String getRole() { 
+        return role; 
+    }
+
+    /**
+     * Mengubah objek Akun menjadi representasi string.
+     *
+     * @return string yang berisi nama dan role akun
+     */
+    @Override
+    public String toString() {
+        return "User: " + nama + " (" + role + ")";
+    }
+}

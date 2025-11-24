@@ -114,6 +114,10 @@ public class CustomerDriver extends Driver {
         }
     }
 
+   /**
+     * Mengambil objek Keranjang milik Customer, menampilkan daftar barang
+     * di dalamnya, dan menunjukkan total harga belanja.
+     */
     private void lihatKeranjang() {
         Keranjang k = akun.getKeranjang();
         ArrayList<Barang> items = k.getItems();
@@ -125,14 +129,17 @@ public class CustomerDriver extends Driver {
             for (Barang b : items) {
                 System.out.println("- " + b.getNama() + " (Rp" + b.getHarga() + ")");
             }
+           // Asumsi k.hitungTotal() menghitung total harga dari semua item di keranjang
             System.out.println("TOTAL HARGA: Rp" + k.hitungTotal());
         }
     }
 
-   /**
-     * Mengambil objek Keranjang milik Customer, menampilkan daftar barang
-     * di dalamnya, dan menunjukkan total harga belanja.
-     */
+  /**
+     * Memulai proses checkout.
+     * Langkah-langkahnya meliputi:
+     * <ol>
+     * <li>Memastikan keranjang tidak kosong.</li>
+   */
 public void buatTransaksi() {
         Keranjang k = akun.getKeranjang();
         if (k.getItems().isEmpty()) {
@@ -152,7 +159,7 @@ public void buatTransaksi() {
         if (pay.prosesPembayaran()) {
             String idTrx = "TRX-" + System.currentTimeMillis();
             
-            // Clone list barang
+           // Clone list barang agar data transaksi tidak berubah jika barang di listBarang diedit
             ArrayList<Barang> belanjaan = new ArrayList<>(k.getItems());
             
             Transaksi t = new Transaksi(akun, belanjaan, idTrx, total);
@@ -169,13 +176,20 @@ public void buatTransaksi() {
             Invoice inv = new Invoice(t, pay);
             inv.cetak();
             akun.addInvoice(inv);
-            
+
+           // Kosongkan keranjang setelah transaksi berhasil
             k.kosongkan();
             System.out.println("\nTransaksi Berhasil! Menunggu Konfirmasi Admin.");
         }
     }
 
-    
+    /**
+     * Menampilkan opsi metode pembayaran dan meminta input pilihan dari pengguna.
+     * Membuat dan mengembalikan objek sub-kelas {@code Pembayaran} (QRIS, Bank, atau COD)
+     * sesuai dengan pilihan.
+     * @param total Jumlah total tagihan yang harus dibayar.
+     * @return Objek {@code Pembayaran} yang dipilih, atau {@code null} jika input salah.
+     */
     private Pembayaran pilihMetodePembayaran(double total) {
         System.out.println("\nPilih Metode Pembayaran:");
         System.out.println("1. QRIS");
@@ -189,6 +203,7 @@ public void buatTransaksi() {
 
             if (pil == 1) return new QRIS(idPay, total, "NUANSA_AROMA_QR");
             if (pil == 2) return new Bank(idPay, total, "123-456-7890", "Bank BSI");
+           // Asumsi akun.getAlamat() digunakan untuk COD
             if (pil == 3) return new COD(idPay, total, akun.getAlamat());
             
             System.out.println("Pilihan salah.");

@@ -110,6 +110,11 @@ public class AdminDriver extends Driver {
         }
     }
 
+   /**
+     * Meminta ID barang yang akan diedit, kemudian meminta input data baru (Nama, Harga, Stok).
+     * Jika input kosong (tekan Enter), nilai lama akan dipertahankan.
+     * * @return Objek Barang yang berhasil diperbarui, atau {@code null} jika barang tidak ditemukan atau terjadi error input.
+     */
     public Barang inputEditBarang() {
         System.out.println("\n--- Edit Barang ---");
         listBarang.tampilkanSemua();

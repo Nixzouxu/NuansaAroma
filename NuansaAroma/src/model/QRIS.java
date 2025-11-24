@@ -1,11 +1,11 @@
 package nuansaaroma.model;
 
 /**
- * Kelas {@code QRIS} merupakan implementasi konkret dari metode pembayaran
+ * Kelas QRIS merupakan implementasi/turunan metode pembayaran 
  * menggunakan QRIS. Pengguna akan melakukan pemindaian kode QR untuk melakukan
  * pembayaran.
  *
- * <p>Kelas ini menyimpan informasi seperti kode QR yang harus dipindai.</p>
+ * Kelas ini menyimpan informasi seperti kode QR yang harus dipindai.
  */
 public class QRIS extends Pembayaran {
     private String kodeQR;

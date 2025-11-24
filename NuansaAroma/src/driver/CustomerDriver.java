@@ -11,6 +11,7 @@ import java.util.Scanner;
  * melakukan checkout, dan melihat riwayat belanja.
     */
 public class CustomerDriver extends Driver {
+   /** Akun Customer yang sedang login dan menjalankan operasi. */
     private Customer akun;
     private ListBarang listBarang; 
     private ArrayList<Transaksi> globalTransaksi; 

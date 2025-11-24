@@ -120,3 +120,38 @@ public class AdminDriver extends Driver {
         return null;
     }
 
+     private void hapusBarang() {
+        System.out.print("ID Barang dihapus: ");
+        listBarang.hapusBarang(scanner.nextLine());
+    }
+
+    private void lihatTransaksi() {
+        System.out.println("\n--- Daftar Transaksi Masuk ---");
+        if (listTransaksi == null || listTransaksi.isEmpty()) {
+            System.out.println("Belum ada transaksi.");
+        } else {
+            for (Transaksi t : listTransaksi) {
+                System.out.println(t.toString());
+            }
+        }
+    }
+
+    private void konfirmasiTransaksi() {
+        lihatTransaksi();
+        if (listTransaksi == null || listTransaksi.isEmpty()) return;
+
+        System.out.print("ID Transaksi dikonfirmasi: ");
+        String idT = scanner.nextLine();
+        
+        boolean found = false;
+        for(Transaksi t : listTransaksi) {
+            if(t.getIdTransaksi().equals(idT)) {
+                akun.konfirmasiTransaksi(t);
+                found = true;
+                break;
+            }
+        }
+        if(!found) System.out.println("ID tidak ditemukan.");
+    }
+}
+

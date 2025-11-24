@@ -28,3 +28,32 @@ public class Invoice {
         this.idInvoice = "INV-" + System.currentTimeMillis();
     }
 
+    /**
+     * Mencetak detail lengkap invoice ke layar, termasuk nomor invoice,
+     * tanggal cetak, detail transaksi, metode pembayaran, dan total pembayaran.
+     */
+    public void cetak() {
+        System.out.println("\n========== INVOICE NUANSA AROMA ==========");
+        System.out.println("No Invoice   : " + idInvoice);
+        System.out.println("Tanggal      : " + tanggalCetak);
+        // Memanggil toString milik Transaksi
+        System.out.println(transaksi.toString());
+        System.out.println("Metode Bayar : " + pembayaran.getMetode());
+        System.out.println("Total Bayar  : Rp" + pembayaran.getJumlah());
+        System.out.println("==========================================");
+    }
+    
+    /**
+     * Mengembalikan representasi singkat dari invoice, terdiri dari
+     * ID invoice, tanggal cetak, dan metode pembayaran.
+     *
+     * @return string ringkas tentang invoice
+     */
+    @Override
+    public String toString() {
+        return "Invoice [" + idInvoice + "] - " + tanggalCetak + " - " + pembayaran.getMetode();
+    }
+}
+
+    
+

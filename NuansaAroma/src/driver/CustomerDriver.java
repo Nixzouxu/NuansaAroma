@@ -17,6 +17,7 @@ public class CustomerDriver extends Driver {
     private ListBarang listBarang; 
    /** Daftar global untuk semua Transaksi yang sudah dibuat (sebelum dikonfirmasi admin). */
     private ArrayList<Transaksi> globalTransaksi; 
+   /** Objek Scanner untuk menerima input dari pengguna. */
     private Scanner scanner;
 
     public CustomerDriver(Customer akun, ListBarang listBarang, ArrayList<Transaksi> globalTransaksi) {

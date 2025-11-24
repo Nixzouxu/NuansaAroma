@@ -20,6 +20,13 @@ public class CustomerDriver extends Driver {
    /** Objek Scanner untuk menerima input dari pengguna. */
     private Scanner scanner;
 
+   /**
+     * Konstruktor untuk kelas CustomerDriver.
+     *
+     * @param akun Objek Customer yang telah berhasil login.
+     * @param listBarang Objek ListBarang yang berisi data katalog parfum.
+     * @param globalTransaksi ArrayList Transaksi yang akan menampung transaksi baru.
+     */
     public CustomerDriver(Customer akun, ListBarang listBarang, ArrayList<Transaksi> globalTransaksi) {
         this.akun = akun;
         this.listBarang = listBarang;
@@ -27,11 +34,19 @@ public class CustomerDriver extends Driver {
         this.scanner = new Scanner(System.in);
     }
 
+   /**
+     * Mengimplementasikan method abstrak dari kelas {@code Driver}.
+     * Method ini memanggil {@code showMenuCustomer()} untuk menampilkan menu utama Pelanggan.
+     */
     @Override
     public void showMenu() {
         showMenuCustomer();
     }
 
+   /**
+     * Menampilkan menu utama untuk Pelanggan dan menangani navigasi antar pilihan menu.
+     * Loop akan terus berjalan hingga Pelanggan memilih opsi Logout (6).
+     */
     public void showMenuCustomer() {
         int pilihan = 0;
         do {
@@ -56,6 +71,7 @@ public class CustomerDriver extends Driver {
 
              switch (pilihan) {
                 case 1:
+                   // Asumsi akun.lihatBarang(listBarang) menampilkan katalog
                     akun.lihatBarang(listBarang);
                     break;
                 case 2:

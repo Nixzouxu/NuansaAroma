@@ -63,3 +63,43 @@ public class ListBarang {
         }
         System.out.println("Barang yang akan diedit tidak ditemukan.");
     }
+
+    /**
+     * Mencari barang berdasarkan ID.
+     *
+     * @param keyword kata kunci berupa ID barang
+     * @return objek {@code Barang} jika ditemukan, atau {@code null} jika tidak ada
+     */
+    public Barang cariBarang(String keyword) {
+        for (Barang b : barangList) {
+            if (b.getIdBarang().equalsIgnoreCase(keyword)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Menampilkan seluruh barang pada sistem. Jika list kosong, menampilkan pesan
+     * bahwa tidak ada barang.
+     */
+    public void tampilkanSemua() {
+        if (barangList.isEmpty()) {
+            System.out.println("Tidak ada barang di sistem.");
+        } else {
+            System.out.println("\n=== DAFTAR PARFUM ===");
+            for (Barang b : barangList) {
+                System.out.println(b.toString());
+            }
+        }
+    }
+
+    /**
+     * Mengambil seluruh daftar barang yang disimpan.
+     *
+     * @return list barang dalam bentuk {@code ArrayList<Barang>}
+     */
+    public ArrayList<Barang> getList() { return barangList; }
+}
+
+    

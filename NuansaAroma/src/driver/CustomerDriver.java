@@ -96,6 +96,10 @@ public class CustomerDriver extends Driver {
         } while (pilihan != 6);
     }
 
+   /**
+     * Menampilkan katalog barang, kemudian meminta ID barang yang ingin dibeli
+     * dan menambahkannya ke keranjang milik akun Customer.
+     */
     private void prosesTambahKeranjang() {
         akun.lihatBarang(listBarang);
         System.out.print("\nMasukkan ID Parfum yang ingin dibeli: ");
@@ -103,6 +107,7 @@ public class CustomerDriver extends Driver {
         
         Barang b = listBarang.cariBarang(id);
         if (b != null) {
+           // Asumsi akun.tambahKeKeranjang(b) menambahkan 1 item ke keranjang
             akun.tambahKeKeranjang(b);
         } else {
             System.out.println("Barang dengan ID tersebut tidak ditemukan.");
@@ -124,6 +129,10 @@ public class CustomerDriver extends Driver {
         }
     }
 
+   /**
+     * Mengambil objek Keranjang milik Customer, menampilkan daftar barang
+     * di dalamnya, dan menunjukkan total harga belanja.
+     */
 public void buatTransaksi() {
         Keranjang k = akun.getKeranjang();
         if (k.getItems().isEmpty()) {

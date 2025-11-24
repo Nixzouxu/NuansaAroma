@@ -155,11 +155,18 @@ public class AdminDriver extends Driver {
         return null;
     }
 
+   /**
+     * Meminta ID barang yang akan dihapus dan memanggil method hapus pada {@code listBarang}.
+     */
      private void hapusBarang() {
         System.out.print("ID Barang dihapus: ");
         listBarang.hapusBarang(scanner.nextLine());
     }
 
+   /**
+     * Menampilkan semua transaksi yang ada dalam {@code listTransaksi}.
+     * Memeriksa jika daftar transaksi kosong.
+     */
     private void lihatTransaksi() {
         System.out.println("\n--- Daftar Transaksi Masuk ---");
         if (listTransaksi == null || listTransaksi.isEmpty()) {

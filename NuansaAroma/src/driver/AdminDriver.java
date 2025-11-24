@@ -193,6 +193,8 @@ public class AdminDriver extends Driver {
         boolean found = false;
         for(Transaksi t : listTransaksi) {
             if(t.getIdTransaksi().equals(idT)) {
+               // Asumsi: akun.konfirmasiTransaksi(t) akan mengubah status transaksi di objek t
+                // dan mungkin menghapus/memindahkan transaksi dari listTransaksi jika sudah selesai
                 akun.konfirmasiTransaksi(t);
                 found = true;
                 break;

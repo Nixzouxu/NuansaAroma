@@ -8,13 +8,24 @@ import java.util.Scanner;
  * {@code AdminDriver} adalah kelas driver yang menangani interaksi pengguna untuk
  * akun dengan peran Admin.
  * Kelas ini menyediakan menu untuk mengelola barang (parfum) dan transaksi.
+    */
 
 public class AdminDriver extends Driver {
+    /** Akun Admin yang sedang login. */
     private Admin akun;
+    /** Daftar koleksi semua objek Barang (parfum). */
     private ListBarang listBarang;
+   /** Daftar semua Transaksi yang pernah terjadi. */
     private ArrayList<Transaksi> listTransaksi;
+    /** Objek Scanner untuk menerima input dari pengguna. */
     private Scanner scanner;
 
+    /**
+     * Konstruktor untuk kelas AdminDriver.
+     *   akun Objek Admin yang telah berhasil login.
+     *  listBarang Objek ListBarang yang berisi data barang-barang.
+     *  listTransaksi ArrayList Transaksi yang berisi riwayat transaksi.
+     */
     public AdminDriver(Admin akun, ListBarang listBarang, ArrayList<Transaksi> listTransaksi) {
         this.akun = akun;
         this.listBarang = listBarang;
@@ -22,11 +33,19 @@ public class AdminDriver extends Driver {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Mengimplementasikan method abstrak dari kelas {@code Driver}.
+     * Method ini memanggil {@code showMenuAdmin()} untuk menampilkan menu utama Admin.
+     */
     @Override
     public void showMenu() {
         showMenuAdmin();
     }
-
+    
+    /**
+     * Menampilkan menu utama untuk Admin dan menangani navigasi antar pilihan menu.
+     * Loop akan terus berjalan hingga Admin memilih opsi Logout (7).
+     */
     public void showMenuAdmin() {
         int pilihan = 0;
         do {
@@ -63,6 +82,12 @@ public class AdminDriver extends Driver {
             }
         } while (pilihan != 7);
     }
+
+    /**
+     * Meminta input detail barang baru dari Admin dan menambahkannya ke {@code listBarang}.
+     * Melakukan validasi sederhana untuk ID barang yang sudah ada dan input angka.
+     * * @return Objek Barang baru yang berhasil dibuat dan ditambahkan, atau {@code null} jika gagal (misal: ID sudah ada atau input angka salah).
+     */
     public Barang inputBarangBaru() {
         System.out.println("\n--- Tambah Barang Baru ---");
         try {

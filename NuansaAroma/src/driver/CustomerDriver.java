@@ -15,6 +15,7 @@ public class CustomerDriver extends Driver {
     private Customer akun;
    /** Objek yang menyimpan dan mengelola daftar semua barang (katalog). */
     private ListBarang listBarang; 
+   /** Daftar global untuk semua Transaksi yang sudah dibuat (sebelum dikonfirmasi admin). */
     private ArrayList<Transaksi> globalTransaksi; 
     private Scanner scanner;
 

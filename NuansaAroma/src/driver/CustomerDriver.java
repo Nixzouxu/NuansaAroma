@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class CustomerDriver extends Driver {
    /** Akun Customer yang sedang login dan menjalankan operasi. */
     private Customer akun;
+   /** Objek yang menyimpan dan mengelola daftar semua barang (katalog). */
     private ListBarang listBarang; 
     private ArrayList<Transaksi> globalTransaksi; 
     private Scanner scanner;

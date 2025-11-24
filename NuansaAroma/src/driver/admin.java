@@ -34,4 +34,30 @@ public class Admin extends Akun {
      * Modul untuk mengelola barang.
      * Menampilkan pesan bahwa admin sedang mengakses modul kelola barang.
      */
-   
+    public void kelolaBarang() {
+        System.out.println("Mengakses modul kelola barang...");
+    }
+
+    /**
+     * Modul untuk melihat transaksi.
+     * Menampilkan pesan bahwa admin sedang mengakses modul transaksi.
+     */
+    public void lihatTransaksi() {
+        System.out.println("Mengakses modul transaksi...");
+    }
+
+    /**
+     * Mengonfirmasi transaksi dengan mengubah status menjadi "SELESAI".
+     *
+     * @param t Objek Transaksi yang dikonfirmasi
+     */
+    public void konfirmasiTransaksi(Transaksi t){
+        if(t != null){
+            t.setStatus("SELESAI");
+            System.out.println("Transaksi " + t.getIdTransaksi() + " berhasil dikonfirmasi.");
+        } else {
+            System.out.println("Transaksi tidak valid.");
+        }
+    }
+}
+

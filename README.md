@@ -104,7 +104,7 @@ Ini lebih dari sekadar Final Project Praktikum PBO. Ini adalah bukti bahwa konse
 
 ## 🧬 Konsep OOP yang Diterapkan
 
-Ini bukan cuma kode yang jalan—ini penerapan **SOLID principles** dan konsep PBO yang beneran:
+Ini bukan cuma kode yang jalan ini penerapan **SOLID principles** dan konsep PBO yang beneran:
 
 | Konsep | Implementasi | File Terkait |
 |--------|--------------|--------------|

@@ -45,4 +45,58 @@ public class Customer extends Akun {
         lb.tampilkanSemua();
     }
 
-   
+    /**
+     * Menambahkan barang ke keranjang belanja.
+     * Mengecek stok sebelum menambahkan.
+     *
+     * @param b Objek Barang yang akan ditambahkan
+     */
+    public void tambahKeKeranjang(Barang b) {
+        if (b.getStok() > 0) {
+            keranjang.tambahBarang(b); 
+            System.out.println("> Sukses: " + b.getNama() + " masuk keranjang.");
+        } else {
+            System.out.println("> Gagal: Stok barang habis!");
+        }
+    }
+
+    /** @return Keranjang belanja customer */
+    public Keranjang getKeranjang() {
+        return keranjang;
+    }
+
+    /**
+     * Menambahkan invoice ke daftar invoice selesai.
+     *
+     * @param inv Objek Invoice yang selesai
+     */
+    public void addInvoice(Invoice inv) {
+        invoiceSelesai.add(inv);
+    }
+
+    /**
+     * Menampilkan riwayat invoice customer.
+     * Jika belum ada transaksi, menampilkan pesan kosong.
+     */
+    public void lihatRiwayatInvoice() {
+        System.out.println("\n=== RIWAYAT BELANJA " + nama.toUpperCase() + " ===");
+        if (invoiceSelesai.isEmpty()) {
+            System.out.println("Belum ada riwayat transaksi.");
+        } else {
+            for (Invoice inv : invoiceSelesai) {
+                System.out.println(inv.toString());
+            }
+        }
+    }
+
+    /** @return Alamat customer */
+    public String getAlamat() { return alamat; }
+    
+    /** @return Nomor HP customer */
+    public String getNoHP() { return noHP; }
+
+    /** @return Daftar invoice yang sudah selesai */
+    public ArrayList<Invoice> getListInvoice() {
+        return invoiceSelesai;
+    }
+}

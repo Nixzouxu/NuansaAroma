@@ -110,4 +110,103 @@ public class Main {
         System.out.println("Registrasi Berhasil! Silakan Login.");
     }
 
-   
+     /**
+     * Inisialisasi admin default jika belum ada akun.
+     */
+    private static void initDefaultAdmin() {
+        System.out.println("[SYSTEM] Membuat Admin Default...");
+        Admin admin = new Admin("admin", "admin123", "Owner Nuansa", "owner@nuansa.com");
+        listAkun.add(admin);
+        simpanAkunKeFile(admin);
+    }
+
+    /**
+     * Inisialisasi daftar barang default.
+     */
+    private static void initBarang() {
+        listBarang.tambahBarang(new Barang("M001", "Dior Sauvage", 1850000, 15, "Parfum pria klasik yang elegan.", "Men", "images/dior_sauvage.jpeg"));
+        listBarang.tambahBarang(new Barang("W001", "Chanel No 5", 2650000, 5, "Ikon keharuman wanita sepanjang masa.", "Women", "images/chanel_no5.jpeg"));
+        listBarang.tambahBarang(new Barang("U001", "Baccarat 540", 4500000, 3, "Wangi unisex mewah dan langka.", "Unisex", "images/baccarat_540.jpeg"));
+        listBarang.tambahBarang(new Barang("M002", "Bleu de Chanel", 2000000, 10, "Men (EDT)", "Men", "images/bleude_chanel.jpeg"));
+        listBarang.tambahBarang(new Barang("W002", "Gucci Bloom", 1750000, 8, "Women (EDT)", "Women", "images/gucci_bloom.jpeg"));
+        listBarang.tambahBarang(new Barang("U002", "Tom Ford Black Orchid", 3500000, 4, "Unisex (Parfum)", "Unisex", "images/tom_ford.jpeg"));
+    }
+
+    /**
+     * Menjalankan aplikasi console.
+     */
+    public static void runApp() {
+        while (true) {
+            System.out.println("\n=== NUANSA AROMA SHOP ===");
+            System.out.println("1. Login");
+            System.out.println("2. Register");
+            System.out.println("3. Exit");
+            System.out.print("Pilih: ");
+            String input = scanner.nextLine();
+
+            if (input.equals("1")) {
+                loginProcess();
+            } else if (input.equals("2")) {
+                menuRegister();
+            } else if (input.equals("3")) {
+                break;
+            }
+        }
+    }
+
+    /**
+     * Proses login pengguna.
+     */
+    private static void loginProcess() {
+        System.out.print("Username : ");
+        String user = scanner.nextLine();
+        System.out.print("Password : ");
+        String pass = scanner.nextLine();
+
+        boolean loginSukses = false;
+        for (Akun a : listAkun) {
+            if (a.validasiLogin(user, pass)) {
+                sessionAkun = a;
+                loginSukses = true;
+                break;
+            }
+        }
+
+        if (loginSukses) {
+            System.out.println("Login Berhasil! Halo " + sessionAkun.getNama());
+            if (sessionAkun instanceof Admin) {
+                new AdminDriver((Admin) sessionAkun, listBarang, globalTransaksi).showMenu();
+            } else if (sessionAkun instanceof Customer) {
+                new CustomerDriver((Customer) sessionAkun, listBarang, globalTransaksi).showMenu();
+            }
+            sessionAkun = null;
+        } else {
+            System.out.println("Gagal: Username/Password salah!");
+        }
+    }
+
+    /** @return Daftar semua akun */
+    public static ArrayList<Akun> getListAkun() {
+        return listAkun;
+    }
+
+    /** @return Daftar semua barang */
+    public static ListBarang getListBarang() {
+        return listBarang;
+    }
+
+    /**
+     * Inisialisasi data untuk GUI.
+     */
+    public static void initDataUntukGui() {
+        initBarang();
+        loadDataAkun();
+        loadDataTransaksi();
+        if (listAkun.isEmpty()) initDefaultAdmin();
+    }
+
+    /** @return Daftar semua transaksi global */
+    public static ArrayList<Transaksi> getGlobalTransaksi() {
+        return globalTransaksi;
+    }
+

@@ -9,12 +9,21 @@ import java.util.ArrayList;
 import nuansaaroma.Main; // Akses Global Transaksi (Admin)
 import nuansaaroma.model.*;
 
+/**
+ * Dialog tampilan keranjang belanja untuk customer.
+ * Menampilkan daftar barang, total harga, dan proses checkout.
+ */
 public class KeranjangDialog extends JDialog {
     private Customer customer;
     private DefaultTableModel model;
     private JLabel lblTotal;
     private double totalBelanja = 0;
 
+    /**
+     * Membuat dialog keranjang belanja.
+     * @param parent frame induk
+     * @param customer customer yang sedang login
+     */
     public KeranjangDialog(JFrame parent, Customer customer) {
         super(parent, "Keranjang Saya", true);
         this.customer = customer;
@@ -80,6 +89,9 @@ public class KeranjangDialog extends JDialog {
         setVisible(true);
     }
 
+    /**
+     * Memperbarui tabel keranjang dan total belanja.
+     */
     private void refreshTable() {
         model.setRowCount(0);
         ArrayList<Barang> items = customer.getKeranjang().getItems();
@@ -91,6 +103,18 @@ public class KeranjangDialog extends JDialog {
         lblTotal.setText("Total: Rp " + String.format("%,.0f", totalBelanja));
     }
 
+    /**
+     * Memproses checkout final:
+     * - membuat transaksi
+     * - membuat pembayaran
+     * - membuat invoice
+     * - mengirim transaksi ke admin
+     * - mengurangi stok
+     * - mengosongkan keranjang
+     * - menampilkan struk
+     *
+     * @param methodIndex index metode pembayaran yang dipilih
+     */
     private void prosesTransaksiFinal(int methodIndex) {
         // 1. Setup Data Transaksi
         String idTrx = "TRX-" + System.currentTimeMillis();
@@ -146,4 +170,5 @@ public class KeranjangDialog extends JDialog {
 
         this.dispose();
     }
+
 }

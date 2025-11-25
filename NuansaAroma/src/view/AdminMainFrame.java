@@ -269,3 +269,202 @@ public class AdminMainFrame extends JFrame {
 		}
 	}
 
+	// ----------------------------------------------------------------------
+    // --- CRUD LOGIC MODIFIED ---
+    // ----------------------------------------------------------------------
+
+	/**
+	 * Menampilkan dialog untuk menambah barang baru.
+	 * Mengambil input dari user dan menambahkan ke ListBarang global.
+	 */
+	private void showDialogTambah() {
+		JDialog d = new JDialog(this, "Tambah Barang", true);
+		d.setSize(450, 550); 
+		d.setLocationRelativeTo(this);
+        // JDialog default menggunakan BorderLayout
+		
+        // BARU: JPanel untuk menampung form, dengan GridLayout dan Border
+        JPanel pnlForm = new JPanel(new GridLayout(8, 2, 10, 10));
+        pnlForm.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
+		
+		JTextField tId = ThemeArt.createTextField();
+		JTextField tNama = ThemeArt.createTextField();
+		JTextField tHarga = ThemeArt.createTextField();
+		JTextField tStok = ThemeArt.createTextField();
+        JTextField tKat = ThemeArt.createTextField();
+        JTextField tDeskripsi = ThemeArt.createTextField(); 
+		JTextField tPath = ThemeArt.createTextField(); 
+		
+		pnlForm.add(new JLabel("  ID Barang:")); pnlForm.add(tId);
+		pnlForm.add(new JLabel("  Nama Parfum:")); pnlForm.add(tNama);
+		pnlForm.add(new JLabel("  Harga:")); pnlForm.add(tHarga);
+		pnlForm.add(new JLabel("  Stok Awal:")); pnlForm.add(tStok);
+		pnlForm.add(new JLabel("  Kategori:")); pnlForm.add(tKat);
+        pnlForm.add(new JLabel("  Deskripsi:")); pnlForm.add(tDeskripsi); 
+        pnlForm.add(new JLabel("  Image Path:")); pnlForm.add(tPath); 
+		
+		JButton btnSave = ThemeArt.createButton("SIMPAN", ThemeArt.SUCCESS);
+		pnlForm.add(new JLabel("")); pnlForm.add(btnSave);
+		
+        d.add(pnlForm, BorderLayout.CENTER); // Tambahkan panel form ke dialog
+        
+		btnSave.addActionListener(e -> {
+			try {
+				double h = Double.parseDouble(tHarga.getText());
+				int s = Integer.parseInt(tStok.getText());
+				
+				Barang b = new Barang(
+                    tId.getText(), 
+                    tNama.getText(), 
+                    h, 
+                    s, 
+                    tDeskripsi.getText(), 
+                    tKat.getText(),
+                    tPath.getText()
+                );
+				Main.getListBarang().tambahBarang(b);
+				
+				refreshDataBarang();
+				d.dispose();
+				JOptionPane.showMessageDialog(this, "Barang ditambahkan!");
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(d, "Input ID, Harga, atau Stok tidak valid!");
+			}
+		});
+		d.setVisible(true);
+	}
+
+    /**
+     * Menangani aksi edit: memeriksa baris yang dipilih dan membuka dialog edit.
+     */
+    private void aksiEdit() {
+        int row = tableBarang.getSelectedRow();
+        if (row == -1) { 
+            JOptionPane.showMessageDialog(this, "Pilih barang dulu!"); 
+            return; 
+        }
+        String id = (String) modelBarang.getValueAt(row, 0);
+        Barang b = Main.getListBarang().cariBarang(id);
+        
+        if(b != null) {
+            showDialogEditBarang(b); 
+        }
+    }
+
+    /**
+     * Menampilkan dialog edit barang untuk mengubah atribut barang.
+     *
+     * @param b objek Barang yang akan diedit
+     */
+    private void showDialogEditBarang(Barang b) {
+        JDialog d = new JDialog(this, "Edit Barang: " + b.getNama(), true);
+        d.setSize(750, 450); 
+        d.setLocationRelativeTo(this);
+        d.setLayout(new BorderLayout(15, 15));
+        
+        // Panel utama dengan padding (pnlContent adalah JPanel, jadi bisa pakai setBorder)
+        JPanel pnlContent = new JPanel(new GridLayout(1, 2, 20, 0));
+        pnlContent.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        
+        // --- 1. PANEL DATA (Kiri) ---
+        JPanel pnlData = new JPanel(new GridLayout(7, 2, 10, 10)); 
+        
+        // Field Text untuk di-edit
+        JTextField txtNama = ThemeArt.createTextField(); txtNama.setText(b.getNama());
+        JTextField txtHarga = ThemeArt.createTextField(); txtHarga.setText(String.valueOf(b.getHarga()));
+        JTextField txtStok = ThemeArt.createTextField(); txtStok.setText(String.valueOf(b.getStok()));
+        JTextField txtDeskripsi = ThemeArt.createTextField(); txtDeskripsi.setText(b.getDeskripsi());
+        JTextField txtKat = ThemeArt.createTextField(); txtKat.setText(b.getKategori());
+        JTextField txtPath = ThemeArt.createTextField(); txtPath.setText(b.getImagePath());
+        
+        pnlData.add(new JLabel(" Nama Parfum:")); pnlData.add(txtNama);
+        pnlData.add(new JLabel(" Harga (Angka):")); pnlData.add(txtHarga);
+        pnlData.add(new JLabel(" Stok:")); pnlData.add(txtStok);
+        pnlData.add(new JLabel(" Deskripsi:")); pnlData.add(txtDeskripsi);
+        pnlData.add(new JLabel(" Kategori:")); pnlData.add(txtKat);
+        pnlData.add(new JLabel(" Image Path:")); pnlData.add(txtPath);
+        pnlData.add(new JLabel("")); pnlData.add(new JLabel("")); 
+        
+        // --- 2. PANEL GAMBAR (Kanan) ---
+        JPanel pnlImage = new JPanel(new BorderLayout());
+        pnlImage.setBorder(BorderFactory.createTitledBorder("Preview Gambar"));
+        
+        JLabel lblImage = new JLabel();
+        lblImage.setHorizontalAlignment(JLabel.CENTER);
+        
+        // Muat dan skalakan gambar dari ImagePath
+        ImageIcon productIcon = ThemeArt.scaleImage(b.getImagePath(), 250, 250); 
+        if(productIcon != null) {
+            lblImage.setIcon(productIcon);
+        } else {
+            lblImage.setText("<html><center>Gambar tidak tersedia atau<br>Path salah: " + b.getImagePath() + "</center></html>");
+        }
+        pnlImage.add(lblImage, BorderLayout.CENTER);
+        
+        // --- 3. GABUNGKAN & LOGIC SIMPAN ---
+        pnlContent.add(pnlData);
+        pnlContent.add(pnlImage);
+        d.add(pnlContent, BorderLayout.CENTER);
+
+        JButton btnSave = ThemeArt.createButton("SIMPAN PERUBAHAN", ThemeArt.SUCCESS);
+        JPanel pnlSouth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        pnlSouth.add(btnSave);
+        d.add(pnlSouth, BorderLayout.SOUTH);
+        
+        btnSave.addActionListener(e -> {
+            try {
+                // Update objek Barang 'b' menggunakan setters
+                b.setNama(txtNama.getText());
+                b.setHarga(Double.parseDouble(txtHarga.getText()));
+                b.setStok(Integer.parseInt(txtStok.getText()));
+                b.setDeskripsi(txtDeskripsi.getText());
+                b.setKategori(txtKat.getText());
+                b.setImagePath(txtPath.getText()); 
+                
+                d.dispose();
+                refreshDataBarang();
+                JOptionPane.showMessageDialog(this, "Data barang berhasil diupdate!");
+            } catch(NumberFormatException ex) {
+                JOptionPane.showMessageDialog(d, "Error: Harga/Stok harus angka valid.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        
+        d.setVisible(true);
+    }
+
+	/**
+	 * Menghapus barang yang dipilih dari ListBarang global.
+	 */
+	private void aksiHapus() {
+		int row = tableBarang.getSelectedRow();
+		if(row == -1) { JOptionPane.showMessageDialog(this, "Pilih barang dulu!"); return; }
+		String id = (String) modelBarang.getValueAt(row, 0);
+		if(JOptionPane.showConfirmDialog(this, "Hapus ID: "+id+"?", "Konfirmasi", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			Main.getListBarang().hapusBarang(id);
+			refreshDataBarang();
+		}
+	}
+
+	/**
+	 * Konfirmasi transaksi: ubah status transaksi menjadi selesai dan simpan ke file.
+	 */
+	private void aksiKonfirmasi() {
+		int row = tableTransaksi.getSelectedRow();
+		if(row == -1) {
+			JOptionPane.showMessageDialog(this, "Pilih transaksi dulu!"); return;
+		}
+		String idTrx = (String) modelTransaksi.getValueAt(row, 0);
+		
+		for(Transaksi t : Main.getGlobalTransaksi()) {
+			if(t.getIdTransaksi().equals(idTrx)) {
+				admin.konfirmasiTransaksi(t); // Status berubah jadi SELESAI di memory
+				
+				Main.updateStatusTransaksiDiFile(); 
+				
+				refreshDataTransaksi();
+				JOptionPane.showMessageDialog(this, "Transaksi "+idTrx+" Diterima!");
+				return;
+			}
+		}
+	}
+}

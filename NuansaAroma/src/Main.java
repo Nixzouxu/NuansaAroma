@@ -210,3 +210,86 @@ public class Main {
         return globalTransaksi;
     }
 
+/**
+     * Memuat data transaksi dari file database.
+     */
+    private static void loadDataTransaksi() {
+        File file = new File(FILE_TRX);
+        if (!file.exists()) return;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(";");
+                if (data.length >= 5) {
+                    String idTrx = data[0];
+                    String username = data[1];
+                    double total = Double.parseDouble(data[2]);
+                    String status = data[3];
+                    
+                    ArrayList<Barang> items = new ArrayList<>();
+                    if(data.length > 4 && !data[4].isEmpty()) {
+                        String[] ids = data[4].split(",");
+                        for(String idB : ids) {
+                            Barang b = listBarang.cariBarang(idB);
+                            if(b != null) items.add(b);
+                        }
+                    }
+
+                    Customer cust = null;
+                    for(Akun a : listAkun) {
+                        if(a instanceof Customer && a.getId().equals(username)) {
+                            cust = (Customer) a; break;
+                        }
+                    }
+
+                    if(cust != null) {
+                        Transaksi t = new Transaksi(cust, items, idTrx, total);
+                        t.setStatus(status);
+                        globalTransaksi.add(t);
+                    }
+                }
+            }
+        } catch (Exception e) { 
+            System.out.println("Gagal load transaksi: " + e.getMessage()); 
+        }
+    }
+
+    /**
+     * Menyimpan transaksi baru ke file database.
+     *
+     * @param t Objek Transaksi yang disimpan
+     */
+    public static void simpanTransaksiKeFile(Transaksi t) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_TRX, true))) {
+            String barangIds = t.getBarangIds(); 
+            String line = t.getIdTransaksi() + ";" + 
+                          t.getCustomer().getId() + ";" + 
+                          t.getTotalHarga() + ";" + 
+                          t.getStatus() + ";" + 
+                          barangIds;
+            
+            writer.write(line);
+            writer.newLine();
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    /**
+     * Mengupdate status transaksi di file database.
+     * Menulis ulang seluruh data transaksi agar status terbaru tersimpan.
+     */
+    public static void updateStatusTransaksiDiFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_TRX, false))) { 
+            for(Transaksi t : globalTransaksi) {
+                String barangIds = t.getBarangIds();
+                String line = t.getIdTransaksi() + ";" + 
+                              t.getCustomer().getId() + ";" + 
+                              t.getTotalHarga() + ";" + 
+                              t.getStatus() + ";" + 
+                              barangIds;
+                writer.write(line);
+                writer.newLine();
+            }
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+}

@@ -5,10 +5,18 @@ import java.awt.*;
 import nuansaaroma.Main;
 import nuansaaroma.model.*;
 
+/**
+ * Frame utama untuk proses Login dan Registrasi pada aplikasi Nuansa Aroma.
+ * Menyediakan dua tab (Login & Register) serta mengarahkan user ke dashboard sesuai role.
+ */
 public class LoginRegisterFrame extends JFrame {
     private JTextField txtUserLogin, txtUserReg, txtNamaReg, txtAlamatReg, txtHpReg;
     private JPasswordField txtPassLogin, txtPassReg;
 
+    /**
+     * Membuat tampilan form login dan registrasi dengan layout tab.
+     * Mengatur desain branding kiri dan panel form di kanan.
+     */
     public LoginRegisterFrame() {
         setTitle("Nuansa Aroma - Access");
         setSize(1000, 650); 
@@ -37,6 +45,12 @@ public class LoginRegisterFrame extends JFrame {
     }
 
     // Helper untuk menengahkan konten secara vertikal & horizontal
+    /**
+     * Membungkus panel agar tampil di tengah secara vertikal dan horizontal.
+     *
+     * @param content panel yang akan ditempatkan di tengah
+     * @return panel wrapper dengan layout GridBagLayout
+     */
     private JPanel createCenterPanel(JPanel content) {
         JPanel wrapper = new JPanel(new GridBagLayout());
         wrapper.setBackground(Color.WHITE);
@@ -44,6 +58,11 @@ public class LoginRegisterFrame extends JFrame {
         return wrapper;
     }
 
+    /**
+     * Membuat panel form login (username & password).
+     *
+     * @return panel login siap pakai
+     */
     private JPanel createLoginForm() {
         JPanel p = new JPanel(new GridLayout(0, 1, 15, 15)); // Jarak antar elemen lebih lega
         p.setBackground(Color.WHITE);
@@ -71,6 +90,11 @@ public class LoginRegisterFrame extends JFrame {
         return p;
     }
 
+    /**
+     * Membuat panel form registrasi untuk akun Customer baru.
+     *
+     * @return panel registrasi siap pakai
+     */
     private JPanel createRegisterForm() {
         JPanel p = new JPanel(new GridLayout(0, 1, 10, 10));
         p.setBackground(Color.WHITE);
@@ -101,6 +125,12 @@ public class LoginRegisterFrame extends JFrame {
         return p;
     }
 
+    /**
+     * Menangani proses login:
+     * - Mengecek username & password dari list akun.
+     * - Mengarahkan ke dashboard Admin atau Customer sesuai role.
+     * - Menampilkan pesan error jika gagal.
+     */
     private void aksiLogin() {
         String user = txtUserLogin.getText();
         String pass = new String(txtPassLogin.getPassword());
@@ -145,6 +175,10 @@ public class LoginRegisterFrame extends JFrame {
         }
     }
 
+    /**
+     * Menangani proses registrasi akun Customer baru.
+     * Mengecek input wajib, kemudian menyimpan akun ke list utama.
+     */
     private void aksiRegister() {
         String u = txtUserReg.getText(); String p = new String(txtPassReg.getPassword());
         if(u.isEmpty() || p.isEmpty()) { JOptionPane.showMessageDialog(this, "Lengkapi data!"); return; }
@@ -152,4 +186,5 @@ public class LoginRegisterFrame extends JFrame {
         JOptionPane.showMessageDialog(this, "Registrasi Berhasil!");
         txtUserReg.setText("");
     }
+
 }

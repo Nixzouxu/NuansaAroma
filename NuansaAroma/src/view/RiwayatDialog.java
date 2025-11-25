@@ -4,7 +4,18 @@ import javax.swing.*;
 import java.awt.*;
 import nuansaaroma.model.*;
 
+/**
+ * Dialog untuk menampilkan riwayat transaksi (invoice) milik seorang customer.
+ * Menampilkan daftar invoice dalam tampilan teks scrollable.
+ */
 public class RiwayatDialog extends JDialog {
+
+    /**
+     * Membuat dialog riwayat belanja customer.
+     *
+     * @param parent  frame induk
+     * @param customer customer yang sedang login, digunakan untuk mengambil daftar invoice
+     */
     public RiwayatDialog(JFrame parent, Customer customer) {
         super(parent, "Riwayat Belanja - " + customer.getNama(), true);
         setSize(800, 500);
@@ -50,4 +61,5 @@ public class RiwayatDialog extends JDialog {
         btnClose.addActionListener(e -> dispose());
         setVisible(true);
     }
+
 }
